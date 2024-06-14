@@ -1,0 +1,26 @@
+syntax = "proto3";
+package echoPackage ;
+
+message EchoList {
+    repeated EchoMessage echo = 1;
+}
+message EchoMessage {
+    // type name = tag ;
+    string value = 1; // the number reperseted tags ; 1 , 2 , 3 , ...
+    string serverResponse = 2;
+    
+}
+message Empty {}
+// type of gRPC calls
+
+// unary classic request and response
+// clinetStream => client streamed data to server 
+// server stream => server streamed data to client
+// bidiStream => client streamed data to server => server streamed data to client
+
+service EchoService {
+    rpc EchoUnary(EchoMessage) returns (EchoMessage) ;
+    rpc EchoClientStream(stream EchoMessage) returns (Empty) ;
+    rpc EchoServerStream(Empty) returns (stream EchoMessage) ;
+    rpc EchoBidiStream(stream EchoMessage) returns (stream EchoMessage) ;
+}
